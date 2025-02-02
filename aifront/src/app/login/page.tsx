@@ -1,70 +1,95 @@
-import Link from "next/link";
+"use client"
+
+import { useState } from "react"
+// import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"     //CardFooter
+import { Alert, AlertDescription } from "@/components/ui/alert"
+
+import { loginStore } from "@/app/_store/login"
+
+export default function LoginPage() {
+    const [name, setName] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
 
 
-export default function loginpage(){
-    return(
-        <div>
-            <div className="flex items-center justify-center min-h-screen bg-gray-100">
-                <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-                    <h2 className="text-2xl font-bold text-center text-gray-900">Login</h2>
-                    <form className="mt-8 space-y-6">
-                        <div className="rounded-md shadow-sm">
-                            <div>
-                                <label htmlFor="email" className="sr-only">Email address</label>
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    required
-                                    className="relative block w-full px-3 py-2 border border-gray-300 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Email address"
-                                />
-                            </div>
-                            <div className="-mt-px">
-                                <label htmlFor="password" className="sr-only">Password</label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    required
-                                    className="relative block w-full px-3 py-2 border border-gray-300 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    placeholder="Password"
-                                />
-                            </div>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <input
-                                    id="remember_me"
-                                    name="remember_me"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                                />
-                                <label htmlFor="remember_me" className="block ml-2 text-sm text-gray-900">
-                                    Remember me
-                                </label>
-                            </div>
-                            <div className="text-sm">
-                                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                    Forgot your password?
-                                </a>
-                            </div>
-                        </div>
-                        <div>
-                            <Link href="/notes">
-                            <button
-                                type="submit"
-                                className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Sign in
-                            </button>
-                            </Link>
-                        </div>
-                    </form>
+    const router = useRouter();
+    const { loginRequest } = loginStore()
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setError("")
+
+        try {
+            console.log("Login attempted with:", { username:name, password:password })
+            const {success, message, user} = await loginRequest({ username:name, password:password })
+            if (!success) {
+                setError(message)
+            }
+            else{
+                console.log("Login successful with", user, "! Redirecting to notes page.")
+                router.push("/notes")
+            }
+        //   setError("Login functionality not implemented yet")
+        } catch (err) {
+        setError("An error occurred. Please try again.")
+        console.error("Login error:", err)
+        }
+    }
+
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <Card className="w-full max-w-md">
+            <CardHeader>
+            <CardTitle className="text-2xl font-bold text-center">Login</CardTitle>
+            </CardHeader>
+            <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                    id="name"
+                    type="name"
+                    placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                />
                 </div>
-            </div>
+                <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+                </div>
+                {error && (
+                <Alert variant="destructive">
+                    <AlertDescription>{error}</AlertDescription>
+                </Alert>
+                )}
+                <Button type="submit" className="w-full">
+                Log In
+                </Button>
+            </form>
+            </CardContent>
+            {/* <CardFooter className="justify-center">
+            <p className="text-sm text-gray-600">
+                Don't have an account?{" "}
+                <Link href="/register" className="text-blue-600 hover:underline">
+                Register here
+                </Link>
+            </p>
+            </CardFooter> */}
+        </Card>
         </div>
-    );
-}
+    )
+    }
+
