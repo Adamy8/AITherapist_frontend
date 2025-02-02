@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
 import { Toaster } from "@/components/ui/toaster"
 import Link from "next/link"
-
+ 
 const NoteMainPage = () => {
   const { toast } = useToast() // Toast description
   const { fetchAllNotes, notes, fetchNote, createNote, generateVAD, deleteNote, updateNote } = useNotesStore()
@@ -20,7 +20,11 @@ const NoteMainPage = () => {
   const [isEditingNote, setIsEditingNote] = useState(false)
 
   useEffect(() => {
-    fetchAllNotes()
+    const fetchNotes = async () => {
+      const data = await fetchAllNotes();  // Assuming fetchAllNotes is an async function
+      console.log("Note updated successfully initial:", data); //debug
+    };
+    fetchNotes();
   }, [fetchAllNotes])
 
   const handleNoteClick = async (noteId: number) => {
@@ -39,8 +43,15 @@ const NoteMainPage = () => {
     e.preventDefault()
     const { success, message, note_id } = await createNote(newNote)
     setNewNote({ title: "", content: "" })
-    setIsCreatingNote(false)
-    fetchAllNotes() // Refresh the list of notes
+    await setIsCreatingNote(false);
+    const data = await fetchAllNotes();
+    console.log("Note updated successfully after submit:", data); //debug
+    toast({
+      variant: "success",
+      description: "🎉 Note created successfully",
+      className: "p-6 text-2xl",
+      duration: 800
+    })
     if (success) {
       const { success, message, description } = await generateVAD(note_id)
       if (success) {
@@ -61,7 +72,7 @@ const NoteMainPage = () => {
       const { success } = await deleteNote(selectedNote.note_id)
       if (success) {
         setSelectedNote(null)
-        fetchAllNotes()
+        await fetchAllNotes()
       }
     }
   }
@@ -77,8 +88,9 @@ const NoteMainPage = () => {
     if (selectedNote) {
       const { success, message } = await updateNote(selectedNote.note_id, selectedNote)
       if (success) {
-        setIsEditingNote(false)
-        fetchAllNotes()
+        setIsEditingNote(false);
+        const data = await fetchAllNotes(); //debug
+        console.log("Note updated successfully:", data); //debug
         const { success, message, description } = await generateVAD(selectedNote.note_id)
         if (success) {
           console.log("VAD generated successfully for note", selectedNote.note_id, "\ndescription:", description)
@@ -108,7 +120,7 @@ const NoteMainPage = () => {
                 key={note.note_id}
                 variant="ghost"
                 className="w-full justify-start text-left text-sm font-medium hover:bg-accent focus:bg-accent"
-                onClick={() => handleNoteClick(note.note_id)}
+                onClick={async() => await handleNoteClick(note.note_id)}
               >
                 {note.title}
               </Button>

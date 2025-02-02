@@ -52,7 +52,7 @@ const DisplayPage = () => {
                                     <h2 className="font-bold text-2xl">
                                         Description:
                                     </h2>
-                                    <p>{notes.find(note => note.note_id === notestate)?.description}</p>
+                                    <p>This reflection: {notes.find(note => note.note_id === notestate)?.description}</p>
                                 </div>
                                 <div>
                                     <h2 className="font-bold text-2xl">
