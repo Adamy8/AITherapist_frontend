@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 const DisplayPage = () => {
     const { fetchAllNotes, notes } = useNotesStore();
-    const [ notestate, setNoteState ] = useState(null);
+    const [ notestate, setNoteState ] = useState(0);
 
     useEffect(() => {
         fetchAllNotes();
@@ -58,7 +58,7 @@ const DisplayPage = () => {
                                     <h2 className="font-bold text-2xl">
                                         Suggestion:
                                     </h2>
-                                    <p>{notes.find(note => note.note_id === notestate)?.suggestion}</p>
+                                    <p>{notes.find(note=> note.note_id === notestate)?.suggestion}</p>
                                 </div>
                             </div>
                         ):(
