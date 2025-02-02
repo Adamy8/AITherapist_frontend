@@ -10,7 +10,7 @@ export default function Home() {
         <p className="text-xl mb-8">Your personal AI self-reflection journal</p>
         <Link href="/login">
         <Button className="bg-white text-blue-500 hover:bg-gray-200">
-          Login
+          Start Journaling!
         </Button>
         </Link>
       </div>
