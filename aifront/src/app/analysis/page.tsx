@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 const DisplayPage = () => {
     const { fetchAllNotes, notes } = useNotesStore();
     const [ notestate, setNoteState ] = useState(0);
+    const Path = process.env.BACKEND_API_URL;
 
     useEffect(() => {
         fetchAllNotes();
@@ -36,7 +37,7 @@ const DisplayPage = () => {
                             {notes.find(note => note.note_id === notestate)?.title || 'No note found'}
                             </h2>
                             <div className="flex-1 flex flex-col overflow-auto h-full">
-                            <img src={"http://49.51.195.205"+notes.find(note => note.note_id === notestate)?.img_url} alt="EmotionGraph" className=" h-full object-contain pt-4" />
+                            <img src={Path+notes.find(note => note.note_id === notestate)?.img_url} alt="EmotionGraph" className=" h-full object-contain pt-4" />
                             </div>
                             </div>
                         ) : (

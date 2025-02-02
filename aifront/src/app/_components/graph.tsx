@@ -13,6 +13,7 @@ export default function GraphSection() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState({vad_img_url: "", emo_sum_img_url: ""});
+    const Path = process.env.BACKEND_API_URL;
 
     // Fetch the image URL from backend API
     useEffect(() => {
@@ -59,7 +60,7 @@ export default function GraphSection() {
           </h2>
           <div className="flex-1 flex flex-col overflow-auto h-full">
             {imageUrl ? (
-              <img src={"https://49.51.195.205"+imageUrl} alt="Graph" className="w-full h-full object-contain pt-4" />
+              <img src={Path+imageUrl} alt="Graph" className="w-full h-full object-contain pt-4" />
             ) : (
               <div>No image available</div>
             )}
