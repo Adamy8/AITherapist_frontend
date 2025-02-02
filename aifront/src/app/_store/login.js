@@ -26,11 +26,13 @@ export const loginStore = create((set) => ({
     },
 
     loginRequest: async (auth) => {
+        console.log("Login request in _store: ", auth);  // Debug log
         // Send a POST request to the server to authenticate the user
         const res = await fetch("/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(auth)  // `auth` contains username and password
+            body: JSON.stringify(auth),  // `auth` contains username and password
+            credentials: "include",
         });
         
         const data = await res.json();
