@@ -3,11 +3,16 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
+// type GraphData = {
+//     vad_img_url: string;
+//     emo_sum_img_url: string;
+// };
+
 export default function GraphSection() {
-    const [imageUrl, setImageUrl] = useState(null);
+    const [imageUrl, setImageUrl] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [data, setData] = useState(null);
+    const [data, setData] = useState({vad_img_url: "", emo_sum_img_url: ""});
 
     // Fetch the image URL from backend API
     useEffect(() => {
@@ -22,8 +27,7 @@ export default function GraphSection() {
                 setImageUrl(data.vad_img_url);  // Default to vad_img_url
                 console.log("Fetched Data:", data);  // Log to check the structure
             } catch (err) {
-                setError(err.message);
-            } finally {
+                // setError(err.message);
                 setLoading(false);
             }
         };
@@ -55,7 +59,7 @@ export default function GraphSection() {
           </h2>
           <div className="flex-1 flex flex-col overflow-auto h-full">
             {imageUrl ? (
-              < src={imageUrl} alt="Graph" className="w-full h-full object-contain pt-4" />
+              <img src={imageUrl} alt="Graph" className="w-full h-full object-contain pt-4" />
             ) : (
               <div>No image available</div>
             )}
