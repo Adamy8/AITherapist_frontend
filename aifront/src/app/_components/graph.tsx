@@ -8,41 +8,25 @@ import { useEffect, useState } from "react";
 //     emo_sum_img_url: string;
 // };
 
-export default function GraphSection() {
+const GraphSection = () => {
     const [imageUrl, setImageUrl] = useState("");
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [data, setData] = useState({vad_img_url: "", emo_sum_img_url: ""});
-    const Path = process.env.BACKEND_API_URL;
 
     // Fetch the image URL from backend API
     useEffect(() => {
         const fetchImageUrl = async () => {
-            try {
-                const response = await fetch("/api/generate_vad_graph");
-                if (!response.ok) {
-                    throw new Error("Failed to fetch image URL");
-                }
-                const data = await response.json();
-                setData(data);  // Store the entire data object
-                setImageUrl(data.vad_img_url);  // Default to vad_img_url
-                console.log("Fetched Data:", data);  // Log to check the structure
-            } catch (err) {
-                // setError(err.message);
-                setLoading(false);
-            }
+          const response = await fetch("/api/generate_vad_graph");
+          if (!response.ok) {
+              throw new Error("Failed to fetch image URL");
+          }
+          const data = await response.json();
+          setData(data);  // Store the entire data object
+          setImageUrl(data.vad_img_url);  // Default to vad_img_url
+          console.log("Fetched Data:", data);  // Log to check the structure
         };
 
         fetchImageUrl();
     }, []);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
 
     // Toggle between two image URLs
     const toggleImage = () => {
@@ -54,13 +38,15 @@ export default function GraphSection() {
     };
 
     return (
-        <div className="flex-1 flex flex-col overflow-auto h-full relative">
+        <div className="flex-1 flex flex-col overflow-auto h-full relative max-h-[66.6667vh]">
           <h2 className="font-bold absolute top-0 left-0 right-0 p-4 z-10 font-bold font-semibold text-2xl">
             Your Emotional Graph
           </h2>
           <div className="flex-1 flex flex-col overflow-auto h-full">
-            {imageUrl ? (
-              <img src={Path+imageUrl} alt="Graph" className="w-full h-full object-contain pt-4" />
+            {imageUrl!="" ? (
+              <div>
+              <img src={`${imageUrl}`} alt="Graph" className="h-full object-contain pt-4" />
+              </div>
             ) : (
               <div>No image available</div>
             )}
@@ -74,3 +60,6 @@ export default function GraphSection() {
         </div>
     );
 }
+
+
+export default GraphSection;

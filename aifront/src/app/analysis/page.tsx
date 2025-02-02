@@ -8,8 +8,7 @@ import { useEffect, useState } from "react";
 
 const DisplayPage = () => {
     const { fetchAllNotes, notes } = useNotesStore();
-    const [ notestate, setNoteState ] = useState(0);
-    const Path = process.env.BACKEND_API_URL;
+    const [ notestate, setNoteState ] = useState(-1);
 
     useEffect(() => {
         fetchAllNotes();
@@ -31,13 +30,13 @@ const DisplayPage = () => {
                     <div className="flex-1 flex flex-col md:flex-row overflow-auto max-h-[66.6667vh]">
                         {/* Left content (top-left) */}
                         <div className="flex-1 flex flex-col overflow-auto h-full relative">
-                        {notestate ? (
+                        {notestate!=-1 ? (
                             <div className="flex-1 flex flex-col overflow-auto h-full relative">
                             <h2 className="font-bold absolute top-0 left-0 right-0 p-4 z-10 font-bold font-semibold text-2xl">
                             {notes.find(note => note.note_id === notestate)?.title || 'No note found'}
                             </h2>
                             <div className="flex-1 flex flex-col overflow-auto h-full">
-                            <img src={Path+notes.find(note => note.note_id === notestate)?.img_url} alt="EmotionGraph" className=" h-full object-contain pt-4" />
+                            <img src={`${notes.find(note => note.note_id === notestate)?.img_url}`} alt="EmotionGraph" className=" h-full object-contain pt-4" />
                             </div>
                             </div>
                         ) : (
@@ -47,7 +46,7 @@ const DisplayPage = () => {
             
                         {/* Right content (top-right) */}
                         <div className="flex-1 p-4 overflow-auto">
-                        {notestate ? (
+                        {notestate!=-1 ? (
                             <div>
                                 <div>
                                     <h2 className="font-bold text-2xl">
@@ -84,7 +83,7 @@ const DisplayPage = () => {
                         ))}
                     </div>
                     <div  className="flex">
-                    <Button className="mt-4" variant="link" onClick={() => handleNoteClick(0)}>
+                    <Button className="mt-4" variant="link" onClick={() => handleNoteClick(-1)}>
                         All notes
                     </Button>
                     </div>
