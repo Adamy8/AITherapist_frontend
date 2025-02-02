@@ -25,7 +25,7 @@ export default function LoginPage() {
 
         try {
             console.log("Login attempted with:", { username:name, password:password })
-            const {success, message, user} = await loginRequest({ username:name, password:password })
+            const {success, message, user} = await loginRequest({ "username":name, "password":password })
             if (!success) {
                 setError(message)
             }
