@@ -36,7 +36,7 @@ const DisplayPage = () => {
                             {notes.find(note => note.note_id === notestate)?.title || 'No note found'}
                             </h2>
                             <div className="flex-1 flex flex-col overflow-auto h-full">
-                            <img src={notes.find(note => note.note_id === notestate)?.img_url} alt="EmotionGraph" className=" h-full object-contain pt-4" />
+                            <img src={"http://49.51.195.205"+notes.find(note => note.note_id === notestate)?.img_url} alt="EmotionGraph" className=" h-full object-contain pt-4" />
                             </div>
                             </div>
                         ) : (
