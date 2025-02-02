@@ -55,7 +55,7 @@ export default function GraphSection() {
           </h2>
           <div className="flex-1 flex flex-col overflow-auto h-full">
             {imageUrl ? (
-              <img src={imageUrl} alt="Graph" className="w-full h-full object-contain p-4" />
+              <img src={imageUrl} alt="Graph" className="w-full h-full object-contain pt-4" />
             ) : (
               <div>No image available</div>
             )}

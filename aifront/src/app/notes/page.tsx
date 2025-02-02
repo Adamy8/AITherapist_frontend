@@ -7,8 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/hooks/use-toast"
+import { Toaster } from "@/components/ui/toaster"
+import Link from "next/link"
 
 const NoteMainPage = () => {
+  const { toast } = useToast() // Toast description
   const { fetchAllNotes, notes, fetchNote, createNote, generateVAD, deleteNote, updateNote } = useNotesStore()
   const [selectedNote, setSelectedNote] = useState<{ title: string; content: string; note_id: number } | null>(null)
   const [isCreatingNote, setIsCreatingNote] = useState(false)
@@ -41,6 +45,10 @@ const NoteMainPage = () => {
       const { success, message, description } = await generateVAD(note_id)
       if (success) {
         console.log("VAD generated successfully for note", note_id, "\ndescription:", description)
+        toast({
+          description: "🎇 " + description + "🚀",
+          className: "p-6 text-2xl"
+        })
       } else {
         console.error("VAD generation failed for note", note_id, ":", message, description)
       }
@@ -71,6 +79,16 @@ const NoteMainPage = () => {
       if (success) {
         setIsEditingNote(false)
         fetchAllNotes()
+        const { success, message, description } = await generateVAD(selectedNote.note_id)
+        if (success) {
+          console.log("VAD generated successfully for note", selectedNote.note_id, "\ndescription:", description)
+          toast({
+            description: "🎇 " + description + "🚀",
+            className: "p-6 text-2xl"
+          })
+        } else {
+          console.error("VAD generation failed for note", selectedNote.note_id, ":", message, description)
+        }
       }
     }
   }
@@ -97,8 +115,18 @@ const NoteMainPage = () => {
             ))}
           </div>
         </ScrollArea>
+        <div className="p-4 border-t border-border">
+            <Link href="/analysis">
+            <Button variant="outline" className="flex items-center font-sans">
+            <span className="bg-gradient-to-r from-purple-400 via-indigo-500 to-pink-500 bg-clip-text text-transparent font-extrabold text-2xl">
+                AI
+            </span>
+            <span className="ml-1 text-lg">Analysis</span>
+            </Button>
+            </Link>
+        </div>
       </div>
-
+      <Toaster />    {/* Hook */}
       {/* Main Content Area */}
       <div className="flex-1 p-6 overflow-auto">
         {isCreatingNote ? (
