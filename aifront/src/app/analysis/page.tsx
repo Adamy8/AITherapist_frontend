@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import GraphSection from "./graph";
-import TextComment from "./textcomment";
+import GraphSection from "../_components/graph";
+import TextComment from "../_components/textcomment";
 import { useNotesStore } from "@/app/_store/notes";
 import { useEffect, useState } from "react";
 
