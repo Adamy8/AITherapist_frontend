@@ -70,7 +70,7 @@ export const useNotesStore = create((set) => ({
             throw new Error(`HTTP error! status: ${res.status}`);
         }
         // const data = {notes:[{note_id:1, title:"test"},{note_id:2, title:"testlalala"}]}; // test!!!
-        set({notes: data.notes});
+        await set({notes: data.notes});
         return {data};
     },
 
