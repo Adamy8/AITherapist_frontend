@@ -38,17 +38,17 @@ const GraphSection = () => {
     };
 
     return (
-        <div className="flex-1 flex flex-col overflow-auto h-full relative max-h-[66.6667vh]">
+        <div className="flex flex-col overflow-auto h-full relative">
           <h2 className="font-bold absolute top-0 left-0 right-0 p-4 z-10 font-bold font-semibold text-2xl">
             Your Emotional Graph
           </h2>
-          <div className="flex-1 flex flex-col overflow-auto h-full">
+          <div className="flex flex-col overflow-auto h-full">
             {imageUrl!="" ? (
-              <div>
+              <div className="flex-1 flex flex-col overflow-auto h-full">
               <img src={`${imageUrl}`} alt="Graph" className="h-full object-contain pt-4" />
               </div>
             ) : (
-              <div>No image available</div>
+              <div className="flex pt-12 pl-20">Sorry, no image available</div>
             )}
           </div>
           <Button 
