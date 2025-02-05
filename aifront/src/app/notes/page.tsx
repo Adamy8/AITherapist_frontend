@@ -108,7 +108,7 @@ const NoteMainPage = () => {
   return (
     <div className="flex h-screen bg-background">
       {/* Left Sidebar */}
-      <div className="w-64 border-r border-border flex flex-col bg-white p-4">
+      <div className="w-20 sm:w-30 md:w-48 lg:w-64 border-r border-border flex flex-col bg-white p-1.5 md:p-4">
         <h2 className="text-xl font-semibold text-muted-foreground mb-4">Notes</h2>
         <Button onClick={handleCreateNote} className="mb-4">
           New Note
@@ -127,17 +127,18 @@ const NoteMainPage = () => {
             ))}
           </div>
         </ScrollArea>
-        <div className="p-4 border-t border-border">
+        <div className="p-2 md:p-4 border-t border-border pl-0 md:pl-4 ">
             <Link href="/analysis">
             <Button variant="outline" className="flex items-center font-sans">
             <span className="bg-gradient-to-r from-purple-400 via-indigo-500 to-pink-500 bg-clip-text text-transparent font-extrabold text-2xl">
                 AI
             </span>
-            <span className="ml-1 text-lg">Analysis</span>
+            <span className="hidden md:block ml-1 text-lg">Analysis</span>
             </Button>
             </Link>
         </div>
       </div>
+
       <Toaster />    {/* Hook */}
       {/* Main Content Area */}
       <div className="flex-1 p-6 overflow-auto">
