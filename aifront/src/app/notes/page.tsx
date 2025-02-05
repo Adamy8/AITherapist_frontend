@@ -58,7 +58,8 @@ const NoteMainPage = () => {
         console.log("VAD generated successfully for note", note_id, "\ndescription:", description)
         toast({
           description: "🎇 " + description + "🚀",
-          className: "p-6 text-2xl"
+          className: "p-6 text-2xl",
+          duration: 6500
         })
       } else {
         console.error("VAD generation failed for note", note_id, ":", message, description)
@@ -107,6 +108,7 @@ const NoteMainPage = () => {
 
   return (
     <div className="flex h-screen bg-background">
+      <Toaster />    {/* Hook */}
       {/* Left Sidebar */}
       <div className="w-20 sm:w-30 md:w-48 lg:w-64 border-r border-border flex flex-col bg-white p-1.5 md:p-4">
         <h2 className="text-xl font-semibold text-muted-foreground mb-4">Notes</h2>
@@ -138,8 +140,7 @@ const NoteMainPage = () => {
             </Link>
         </div>
       </div>
-
-      <Toaster />    {/* Hook */}
+      
       {/* Main Content Area */}
       <div className="flex-1 p-6 overflow-auto">
         {isCreatingNote ? (
