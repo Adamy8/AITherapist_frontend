@@ -8,7 +8,6 @@ export const loginStore = create((set) => ({
         const res = await fetch("/auth", {
             method: "POST",
             headers: {
-                "ngrok-skip-browser-warning": "true",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(newAuth)
@@ -34,7 +33,6 @@ export const loginStore = create((set) => ({
         const res = await fetch("/auth/login", {
             method: "POST",
             headers: {
-                "ngrok-skip-browser-warning": "true",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(auth),  // `auth` contains username and password

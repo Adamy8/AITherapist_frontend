@@ -28,6 +28,7 @@ const DisplayPage = () => {
             </div>
                 <div className="flex-1 flex flex-col">     {/* Main content (flex container) */}
                     <div className="flex-1 flex flex-col md:flex-row overflow-auto max-h-[66.6667vh]">
+                        
                         {/* Left content (top-left) */}
                         <div className="flex-1 flex flex-col overflow-auto h-full relative">
                         {notestate!=-1 ? (

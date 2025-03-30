@@ -9,7 +9,6 @@ export const useNotesStore = create((set) => ({
         const res = await fetch("/api/notes/", {
             method: "POST",
             headers: {
-                "ngrok-skip-browser-warning": "true",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(newNote)
@@ -31,7 +30,6 @@ export const useNotesStore = create((set) => ({
         const res = await fetch(`/api/generate_vad/${note_id}`, {
             method: "POST", // anything works in django backend
             headers: {
-                "ngrok-skip-browser-warning": "true",
                 "Content-Type": "application/json"
             },
         });
@@ -46,7 +44,6 @@ export const useNotesStore = create((set) => ({
         const res = await fetch(`/api/notes/${note_id}`, {
             method: "PUT",
             headers: {
-                "ngrok-skip-browser-warning": "true",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(updatedNote)
@@ -72,7 +69,6 @@ export const useNotesStore = create((set) => ({
         const res = await fetch("/api/notes/",{
             method: "GET",
             headers: {
-                "ngrok-skip-browser-warning": "true",
                 "Content-Type": "application/json"
             },
         });
@@ -90,7 +86,6 @@ export const useNotesStore = create((set) => ({
         const res = await fetch(`/api/notes/${note_id}`,{
             method: "GET",
             headers: {
-                "ngrok-skip-browser-warning": "true",
                 "Content-Type": "application/json"
             },
         });
@@ -106,7 +101,6 @@ export const useNotesStore = create((set) => ({
         const res = await fetch(`/api/notes/${note_id}`, {
             method: "DELETE",
             headers: {
-                "ngrok-skip-browser-warning": "true",
                 "Content-Type": "application/json"
             },
         });

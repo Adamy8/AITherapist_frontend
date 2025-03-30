@@ -18,7 +18,6 @@ const GraphSection = () => {
           const response = await fetch("/api/generate_vad_graph",{
             method: "GET",
             headers: {
-              "ngrok-skip-browser-warning": "true",
               "Content-Type": "application/json",
             },
           });
