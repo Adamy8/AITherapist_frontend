@@ -1,4 +1,4 @@
-"use client"  // Make sure this is in a Next.js component or an app that uses client-side rendering
+"use client"
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 const GraphSection = () => {
     const [imageUrl, setImageUrl] = useState("");
     const [data, setData] = useState({vad_img_url: "", emo_sum_img_url: ""});
+    const [imageObjectUrl, setImageObjectUrl] = useState<string | null>(null);
 
     // Fetch the image URL from backend API
     useEffect(() => {
@@ -18,6 +19,7 @@ const GraphSection = () => {
           const response = await fetch("/api/generate_vad_graph",{
             method: "GET",
             headers: {
+              "ngrok-skip-browser-warning": "true",
               "Content-Type": "application/json",
             },
           });
@@ -33,7 +35,34 @@ const GraphSection = () => {
         fetchImageUrl();
     }, []);
 
-    // Toggle between two image URLs
+    // Fetch and process the actual image
+    useEffect(() => {
+        const fetchImage = async () => {
+            if (!imageUrl) return;
+            
+            try {
+                const response = await fetch(imageUrl, {
+                    headers: {
+                        "ngrok-skip-browser-warning": "true",
+                    }
+                });
+                const blob = await response.blob();
+                const objectUrl = URL.createObjectURL(blob);
+                setImageObjectUrl(objectUrl);
+            } catch (error) {
+                console.error("Error fetching image:", error);
+            }
+        };
+
+        fetchImage();
+
+        return () => {
+            if (imageObjectUrl) {
+                URL.revokeObjectURL(imageObjectUrl);
+            }
+        };
+    }, [imageUrl]);
+
     const toggleImage = () => {
         if (imageUrl === data.vad_img_url) {
             setImageUrl(data.emo_sum_img_url); // Switch to emo_sum_img_url
@@ -48,9 +77,13 @@ const GraphSection = () => {
             Your Emotional Graph
           </h2>
           <div className="flex flex-col overflow-auto h-full">
-            {imageUrl!="" ? (
+            {imageUrl !== "" ? (
               <div className="flex-1 flex flex-col overflow-auto h-full">
-              <img src={`${imageUrl}`} alt="Graph" className="h-full object-contain pt-4" />
+                {imageObjectUrl ? (
+                  <img src={imageObjectUrl} alt="Graph" className="h-full object-contain pt-4" />
+                ) : (
+                  <div className="flex justify-center items-center h-full">Loading...</div>
+                )}
               </div>
             ) : (
               <div className="flex pt-12 pl-20">Sorry, no image available</div>
@@ -58,13 +91,12 @@ const GraphSection = () => {
           </div>
           <Button 
             className="absolute top-4 right-4 p-4 z-10 bg-white text-black hover:bg-gray-300"
-            onClick={toggleImage}  // Toggle image on button click
+            onClick={toggleImage}
           >
             Trend
           </Button>
         </div>
     );
 }
-
 
 export default GraphSection;
