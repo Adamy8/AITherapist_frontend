@@ -1,5 +1,10 @@
 import { create } from "zustand";
 
+const GHeader = {
+    "ngrok-skip-browser-warning": "true",
+    "Content-Type": "application/json"
+};
+
 export const loginStore = create((set) => ({
     auths: [],  // List of user info (auth details)
     setauths: (auth) => set({ auth }),  // Setter to update auths state
@@ -7,9 +12,7 @@ export const loginStore = create((set) => ({
     createAccount: async (newAuth) => {
         const res = await fetch("/auth", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: GHeader,
             body: JSON.stringify(newAuth)
         });
         const data = await res.json();
@@ -32,9 +35,7 @@ export const loginStore = create((set) => ({
         // Send a POST request to the server to authenticate the user
         const res = await fetch("/auth/login", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: GHeader,
             body: JSON.stringify(auth),  // `auth` contains username and password
             credentials: "include",
         });
