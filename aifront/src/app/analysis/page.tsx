@@ -31,18 +31,7 @@ const DisplayPage = () => {
                         
                         {/* Left content (top-left) */}
                         <div className="flex-1 flex flex-col overflow-auto h-full relative">
-                        {notestate!=-1 ? (
-                            <div className="flex-1 flex flex-col overflow-auto h-full relative">
-                            <h2 className="font-bold absolute top-0 left-0 right-0 p-4 z-10 font-bold font-semibold text-2xl">
-                            {notes.find(note => note.note_id === notestate)?.title || 'No note found'}
-                            </h2>
-                            <div className="flex-1 flex flex-col overflow-auto h-full">
-                            <img src={`${notes.find(note => note.note_id === notestate)?.img_url}`} alt="EmotionGraph" className="h-full object-contain pt-4" />
-                            </div>
-                            </div>
-                        ) : (
-                            <GraphSection />
-                        )}
+                            <GraphSection noteId={notestate} />
                         </div>
             
                         {/* Right content (top-right) */}
@@ -95,4 +84,3 @@ const DisplayPage = () => {
   };
   
   export default DisplayPage;
-  
