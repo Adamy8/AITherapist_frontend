@@ -8,7 +8,10 @@ export const useNotesStore = create((set) => ({
     createNote: async (newNote) => {
         const res = await fetch("/api/notes/", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: {
+                "ngrok-skip-browser-warning": "true",
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(newNote)
         });
         const data = await res.json();
@@ -27,7 +30,10 @@ export const useNotesStore = create((set) => ({
     generateVAD: async (note_id) => {
         const res = await fetch(`/api/generate_vad/${note_id}`, {
             method: "POST", // anything works in django backend
-            headers: {"Content-Type": "application/json"},
+            headers: {
+                "ngrok-skip-browser-warning": "true",
+                "Content-Type": "application/json"
+            },
         });
         const data = await res.json();      //generated vad file
         if (!res.ok) {
@@ -39,7 +45,10 @@ export const useNotesStore = create((set) => ({
     updateNote: async (note_id, updatedNote) => {
         const res = await fetch(`/api/notes/${note_id}`, {
             method: "PUT",
-            headers: {"Content-Type": "application/json"},
+            headers: {
+                "ngrok-skip-browser-warning": "true",
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(updatedNote)
         });
         const data = await res.json();
@@ -62,7 +71,10 @@ export const useNotesStore = create((set) => ({
         // console.log("fetch all notes"); //debug
         const res = await fetch("/api/notes/",{
             method: "GET",
-            headers: {"Content-Type": "application/json"},
+            headers: {
+                "ngrok-skip-browser-warning": "true",
+                "Content-Type": "application/json"
+            },
         });
         console.log("fetch all notes res: ",res);
         const data = await res.json();
@@ -77,7 +89,10 @@ export const useNotesStore = create((set) => ({
     fetchNote: async (note_id) => {
         const res = await fetch(`/api/notes/${note_id}`,{
             method: "GET",
-            headers: {"Content-Type": "application/json"},
+            headers: {
+                "ngrok-skip-browser-warning": "true",
+                "Content-Type": "application/json"
+            },
         });
         const data = await res.json();
         if (!res.ok) {
@@ -90,6 +105,10 @@ export const useNotesStore = create((set) => ({
     deleteNote: async (note_id) => {
         const res = await fetch(`/api/notes/${note_id}`, {
             method: "DELETE",
+            headers: {
+                "ngrok-skip-browser-warning": "true",
+                "Content-Type": "application/json"
+            },
         });
         const data = await res.json();
         if (!res.ok) {
