@@ -4,14 +4,14 @@
 import { NextResponse } from 'next/server';
 
 export function middleware(request: Request) {
-  const response = NextResponse.next();
+    const response = NextResponse.next();
 
-  // Setting custom header for specific routes
-  if (request.url.includes('/api/') || request.url.includes('/auth/')) {
-    response.headers.set('ngrok-skip-browser-warning', 'true');
-  }
+    // Setting custom header for specific routes
+    if (request.url.includes('/api/') || request.url.includes('/auth/')) {
+        request.headers.set('User-Agent', 'non-standard');
+    }
 
-  return response;
+    return response;
 }
 
 export const config = {
