@@ -15,7 +15,13 @@ const GraphSection = () => {
     // Fetch the image URL from backend API
     useEffect(() => {
         const fetchImageUrl = async () => {
-          const response = await fetch("/api/generate_vad_graph");
+          const response = await fetch("/api/generate_vad_graph",{
+            method: "GET",
+            headers: {
+              "ngrok-skip-browser-warning": "true",
+              "Content-Type": "application/json",
+            },
+          });
           if (!response.ok) {
               throw new Error("Failed to fetch image URL");
           }
